@@ -1,0 +1,42 @@
+<div class="trust-bar" role="list" aria-label="Vertrouwenssignalen">
+  {% for block in section.blocks %}
+    {% if block.type == 'item' %}
+      <div class="trust-item" role="listitem" {{ block.shopify_attributes }}>
+        {% if block.settings.icon != blank %}
+          <span class="trust-item__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+        {% endif %}
+        <div>
+          <span class="trust-item__title">{{ block.settings.title }}</span>
+          {{ block.settings.subtitle }}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Vertrouwensbalk",
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji icoon" },
+        { "type": "text", "id": "title", "label": "Titel" },
+        { "type": "text", "id": "subtitle", "label": "Subtitel" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Vertrouwensbalk",
+    "blocks": [
+      { "type": "item", "settings": { "icon": "🚚", "title": "Gratis verzending", "subtitle": "NL & BE boven €80" }},
+      { "type": "item", "settings": { "icon": "✋", "title": "Handgemaakt", "subtitle": "Elk stuk uniek" }},
+      { "type": "item", "settings": { "icon": "📋", "title": "Onderhoudsgids", "subtitle": "Gratis bij bestelling" }},
+      { "type": "item", "settings": { "icon": "💳", "title": "Veilig betalen", "subtitle": "iDEAL, Bancontact, Visa" }},
+      { "type": "item", "settings": { "icon": "🎁", "title": "Cadeau-klaar", "subtitle": "Mooie verpakking" }}
+    ]
+  }]
+}
+{% endschema %}

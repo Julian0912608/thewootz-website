@@ -1,0 +1,93 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__grid">
+
+    <!-- Brand -->
+    <div class="site-footer__brand">
+      <a href="{{ routes.root_url }}" class="site-footer__brand-logo">The<em>Wootz</em></a>
+      <p class="site-footer__brand-desc">{{ section.settings.brand_text | default: 'Handgemaakte houten snijplanken, hakblokken en borrelplanken voor de kok die kwaliteit waardeert. Waar passie begint.' }}</p>
+      <div class="site-footer__social">
+        {% if section.settings.social_instagram != blank %}
+          <a href="{{ section.settings.social_instagram }}" class="site-footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">ig</a>
+        {% endif %}
+        {% if section.settings.social_facebook != blank %}
+          <a href="{{ section.settings.social_facebook }}" class="site-footer__social-link" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+        {% endif %}
+        {% if section.settings.social_tiktok != blank %}
+          <a href="{{ section.settings.social_tiktok }}" class="site-footer__social-link" target="_blank" rel="noopener" aria-label="TikTok">tk</a>
+        {% endif %}
+        {% if section.settings.social_pinterest != blank %}
+          <a href="{{ section.settings.social_pinterest }}" class="site-footer__social-link" target="_blank" rel="noopener" aria-label="Pinterest">pt</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Nav columns via blocks -->
+    {% for block in section.blocks %}
+      {% if block.type == 'nav_column' %}
+        <div class="site-footer__col" {{ block.shopify_attributes }}>
+          <h3 class="site-footer__col-title">{{ block.settings.title }}</h3>
+          <ul class="site-footer__col-links">
+            {% assign menu = linklists[block.settings.menu] %}
+            {% if menu %}
+              {% for link in menu.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+  </div>
+
+  <div class="site-footer__bottom">
+    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }} · {{ section.settings.tagline | default: 'Waar passie begint' }}</span>
+    <div class="site-footer__payments">
+      {% assign payment_methods = shop.enabled_payment_types %}
+      {% if payment_methods.size > 0 %}
+        {% for method in payment_methods %}
+          <span class="payment-badge">{{ method | replace: '_', ' ' | capitalize }}</span>
+        {% endfor %}
+      {% else %}
+        <span class="payment-badge">iDEAL</span>
+        <span class="payment-badge">Bancontact</span>
+        <span class="payment-badge">Visa</span>
+        <span class="payment-badge">Mastercard</span>
+        <span class="payment-badge">Apple Pay</span>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "textarea", "id": "brand_text", "label": "Merkbeschrijving" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Waar passie begint" },
+    { "type": "header", "content": "Social media" },
+    { "type": "url", "id": "social_instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "social_facebook", "label": "Facebook URL" },
+    { "type": "url", "id": "social_tiktok", "label": "TikTok URL" },
+    { "type": "url", "id": "social_pinterest", "label": "Pinterest URL" }
+  ],
+  "blocks": [
+    {
+      "type": "nav_column",
+      "name": "Navigatiekolom",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Kolomtitel" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Footer",
+    "blocks": [
+      { "type": "nav_column", "settings": { "title": "Shop", "menu": "footer-shop" }},
+      { "type": "nav_column", "settings": { "title": "Info", "menu": "footer-info" }},
+      { "type": "nav_column", "settings": { "title": "Contact", "menu": "footer-contact" }}
+    ]
+  }]
+}
+{% endschema %}

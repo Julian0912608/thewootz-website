@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Thema-instellingen",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Kleuren"
+      },
+      {
+        "type": "color",
+        "id": "color_linen",
+        "label": "Achtergrond (Linen)",
+        "default": "#F5EFE4"
+      },
+      {
+        "type": "color",
+        "id": "color_espresso",
+        "label": "Primaire tekst (Espresso)",
+        "default": "#3D2B1F"
+      },
+      {
+        "type": "color",
+        "id": "color_terra",
+        "label": "Accentkleur CTA (Terracotta)",
+        "default": "#B5633A"
+      },
+      {
+        "type": "color",
+        "id": "color_sage",
+        "label": "Accentkleur labels (Sage)",
+        "default": "#7A8C6E"
+      },
+      {
+        "type": "header",
+        "content": "Tracking & Analytics"
+      },
+      {
+        "type": "text",
+        "id": "meta_pixel_id",
+        "label": "Meta Pixel ID",
+        "info": "Vul hier je Meta (Facebook) Pixel ID in voor conversie-tracking."
+      },
+      {
+        "type": "text",
+        "id": "gtm_id",
+        "label": "Google Tag Manager ID",
+        "info": "Bijv. GTM-XXXXXXX"
+      },
+      {
+        "type": "header",
+        "content": "Verzending"
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Gratis verzending drempel (€)",
+        "default": 80
+      },
+      {
+        "type": "header",
+        "content": "Social media"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      },
+      {
+        "type": "header",
+        "content": "SEO"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Standaard deelafbeelding (OG image)"
+      }
+    ]
+  }
+]

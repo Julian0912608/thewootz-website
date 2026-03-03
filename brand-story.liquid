@@ -1,0 +1,72 @@
+<section class="brand-story" id="verhaal">
+  <div class="brand-story__image">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 900 | image_tag:
+          loading: 'lazy', alt: section.settings.image.alt
+      }}
+    {% else %}
+      <div style="background:var(--parchment);width:100%;height:100%;min-height:400px"></div>
+    {% endif %}
+  </div>
+
+  <div class="brand-story__content fade-up">
+    <div class="section-label">{{ section.settings.label | default: 'Ons Verhaal' }}</div>
+    <h2>{{ section.settings.title | default: 'Waar passie voor koken begint' }}</h2>
+    {% if section.settings.text_1 != blank %}
+      <p>{{ section.settings.text_1 }}</p>
+    {% endif %}
+    {% if section.settings.text_2 != blank %}
+      <p>{{ section.settings.text_2 }}</p>
+    {% endif %}
+
+    <div class="brand-story__features">
+      {% for i in (1..4) %}
+        {% assign title_key = 'feat' | append: i | append: '_title' %}
+        {% assign sub_key   = 'feat' | append: i | append: '_sub' %}
+        {% if section.settings[title_key] != blank %}
+          <div class="brand-feature">
+            <div class="brand-feature__dot"></div>
+            <div>
+              <span class="brand-feature__title">{{ section.settings[title_key] }}</span>
+              <span class="brand-feature__subtitle">{{ section.settings[sub_key] }}</span>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.cta_url != blank %}
+      <div style="margin-top:32px">
+        <a href="{{ section.settings.cta_url }}" class="btn btn--outline">
+          {{ section.settings.cta_text | default: 'Lees meer' }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Merkverhaal",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Foto" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Ons Verhaal" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Waar passie voor koken begint" },
+    { "type": "textarea", "id": "text_1", "label": "Tekst alinea 1", "default": "TheWootz is opgericht door echte kookliefhebbers die geloofden dat keukengereedschap net zo mooi moet zijn als het eten dat erop bereid wordt." },
+    { "type": "textarea", "id": "text_2", "label": "Tekst alinea 2" },
+    { "type": "header", "content": "Kenmerken (4 stuks)" },
+    { "type": "text", "id": "feat1_title", "label": "Kenmerk 1 titel", "default": "Duurzaam hout" },
+    { "type": "text", "id": "feat1_sub",   "label": "Kenmerk 1 subtitel", "default": "Bewust geselecteerd" },
+    { "type": "text", "id": "feat2_title", "label": "Kenmerk 2 titel", "default": "100% handgemaakt" },
+    { "type": "text", "id": "feat2_sub",   "label": "Kenmerk 2 subtitel", "default": "Elk stuk uniek" },
+    { "type": "text", "id": "feat3_title", "label": "Kenmerk 3 titel", "default": "Gratis verzending" },
+    { "type": "text", "id": "feat3_sub",   "label": "Kenmerk 3 subtitel", "default": "NL & BE boven €80" },
+    { "type": "text", "id": "feat4_title", "label": "Kenmerk 4 titel", "default": "Cadeau-klaar" },
+    { "type": "text", "id": "feat4_sub",   "label": "Kenmerk 4 subtitel", "default": "Mooie verpakking" },
+    { "type": "header", "content": "Knop (optioneel)" },
+    { "type": "text", "id": "cta_text", "label": "Knoptekst", "default": "Lees ons verhaal" },
+    { "type": "url", "id": "cta_url", "label": "Knoplink" }
+  ],
+  "presets": [{ "name": "Merkverhaal" }]
+}
+{% endschema %}

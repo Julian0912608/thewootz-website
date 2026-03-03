@@ -1,0 +1,109 @@
+<div style="max-width:900px;margin:0 auto;padding:64px 48px;min-height:60vh">
+  <div class="section-label">Winkelwagen</div>
+  <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:300;margin-bottom:40px">
+    Jouw selectie
+  </h1>
+
+  {% if cart.item_count == 0 %}
+    <div style="text-align:center;padding:80px 0;color:var(--mist)">
+      <p style="font-size:1rem;margin-bottom:24px">Je winkelwagen is nog leeg.</p>
+      <a href="{{ routes.collections_url }}/all" class="btn btn--primary">Bekijk de collectie</a>
+    </div>
+  {% else %}
+    <form action="{{ routes.cart_url }}" method="post">
+
+      <div style="border-top:1px solid var(--stone)">
+        {% for item in cart.items %}
+          <div style="display:grid;grid-template-columns:88px 1fr auto;gap:20px;padding:24px 0;border-bottom:1px solid var(--stone);align-items:start">
+
+            <a href="{{ item.url }}">
+              {% if item.image %}
+                {{ item.image | image_url: width: 180 | image_tag:
+                    loading: 'lazy', alt: item.title | escape,
+                    style: 'width:88px;height:88px;object-fit:cover;border-radius:var(--radius)'
+                }}
+              {% endif %}
+            </a>
+
+            <div>
+              <a href="{{ item.url }}" style="font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--espresso);text-decoration:none">
+                {{ item.product_title }}
+              </a>
+              {% if item.variant_title != 'Default Title' %}
+                <div style="font-size:.78rem;color:var(--mist);margin-top:4px">{{ item.variant_title }}</div>
+              {% endif %}
+              <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+                <label for="qty_{{ item.key }}" style="font-size:.75rem;color:var(--mist);letter-spacing:.06em;text-transform:uppercase">Aantal</label>
+                <input type="number" name="updates[]" id="qty_{{ item.key }}"
+                       value="{{ item.quantity }}" min="0"
+                       style="width:56px;padding:6px 8px;border:1.5px solid var(--stone);border-radius:var(--radius);font-family:var(--font-body);font-size:.85rem;background:var(--cream);color:var(--espresso)">
+              </div>
+            </div>
+
+            <div style="text-align:right">
+              <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--espresso)">
+                {{ item.line_price | money }}
+              </div>
+              {% if item.original_line_price != item.line_price %}
+                <s style="font-size:.85rem;color:var(--mist)">{{ item.original_line_price | money }}</s>
+              {% endif %}
+              <div style="margin-top:8px">
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0"
+                   style="font-size:.72rem;color:var(--mist);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .2s"
+                   onmouseover="this.style.color='var(--terra)'" onmouseout="this.style.color='var(--mist)'">
+                  Verwijderen
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Totaal -->
+      <div style="max-width:360px;margin-left:auto;margin-top:32px">
+        {% if cart.cart_level_discount_applications.size > 0 %}
+          {% for discount in cart.cart_level_discount_applications %}
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:.85rem;color:var(--sage)">
+              <span>{{ discount.title }}</span>
+              <span>-{{ discount.total_allocated_amount | money }}</span>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--stone);padding-top:16px;margin-bottom:8px">
+          <span style="font-size:.85rem;color:var(--mocha)">Subtotaal</span>
+          <span style="font-family:var(--font-display);font-size:1.6rem;font-weight:600">{{ cart.total_price | money }}</span>
+        </div>
+
+        <p style="font-size:.75rem;color:var(--mist);margin-bottom:20px">
+          Verzendkosten worden berekend bij het afrekenen.
+          {% if settings.free_shipping_threshold %}
+            Gratis verzending boven <strong style="color:var(--sage)">€{{ settings.free_shipping_threshold }}</strong>.
+          {% endif %}
+        </p>
+
+        <div style="display:flex;gap:10px;flex-direction:column">
+          <button type="submit" name="update" class="btn btn--outline">Winkelwagen bijwerken</button>
+          <a href="{{ routes.checkout }}" class="btn btn--primary">Afrekenen →</a>
+        </div>
+
+        <div style="margin-top:20px;text-align:center">
+          <a href="{{ routes.collections_url }}/all" style="font-size:.78rem;color:var(--mist);text-decoration:none;letter-spacing:.06em">
+            ← Verder winkelen
+          </a>
+        </div>
+      </div>
+
+    </form>
+  {% endif %}
+</div>
+
+@media (max-width:640px) {
+  [style*="grid-template-columns:88px"] {
+    grid-template-columns: 64px 1fr;
+  }
+}
+
+{% schema %}
+{ "name": "Winkelwagenpagina" }
+{% endschema %}

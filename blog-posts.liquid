@@ -1,0 +1,69 @@
+{% assign blog_handle = section.settings.blog | default: 'nieuws' %}
+{% assign blog_obj = blogs[blog_handle] %}
+
+<section class="blog-section" id="blog" aria-label="Blog">
+  <div class="blog-section__head fade-up">
+    <div class="section-label section-label--center">{{ section.settings.label | default: 'Inspiratie & Tips' }}</div>
+    <h2>{{ section.settings.title | default: 'Leer meer over hout & koken' }}</h2>
+  </div>
+
+  <div class="blog-grid">
+    {% if blog_obj and blog_obj.articles.size > 0 %}
+      {% for article in blog_obj.articles limit: 3 %}
+        <a class="blog-card fade-up delay-{{ forloop.index }}" href="{{ article.url }}">
+          {% if article.image %}
+            <div class="blog-card__image">
+              {{ article.image | image_url: width: 900 | image_tag:
+                  loading: 'lazy', alt: article.image.alt | escape
+              }}
+            </div>
+          {% endif %}
+          <div class="blog-card__body">
+            {% if article.tags.size > 0 %}
+              <div class="blog-card__tag">{{ article.tags | first }}</div>
+            {% endif %}
+            <h3 class="blog-card__title">{{ article.title }}</h3>
+            {% if article.excerpt %}
+              <p class="blog-card__excerpt">{{ article.excerpt | strip_html | truncate: 120 }}</p>
+            {% endif %}
+            <div class="blog-card__meta">
+              <span>📅 {{ article.published_at | date: '%d %b %Y' }}</span>
+              <span>{{ article.author }}</span>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    {% else %}
+      <!-- Placeholder als er nog geen blogposts zijn -->
+      {% for i in (1..3) %}
+        <div class="blog-card fade-up delay-{{ i }}" style="pointer-events:none">
+          <div class="blog-card__image" style="background:var(--parchment);aspect-ratio:16/9"></div>
+          <div class="blog-card__body">
+            <div class="blog-card__tag">Blog</div>
+            <h3 class="blog-card__title">Binnenkort — blogpost {{ i }}</h3>
+            <p class="blog-card__excerpt" style="color:var(--mist)">Voeg blogposts toe in Shopify om ze hier te tonen.</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  {% if section.settings.show_all_link and blog_obj %}
+    <div style="text-align:center;margin-top:36px">
+      <a href="{{ blog_obj.url }}" class="btn btn--outline">Bekijk alle artikelen</a>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Blogposts",
+  "settings": [
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Inspiratie & Tips" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Leer meer over hout & koken" },
+    { "type": "checkbox", "id": "show_all_link", "label": "Toon 'Bekijk alle' knop", "default": true }
+  ],
+  "presets": [{ "name": "Blogposts" }]
+}
+{% endschema %}

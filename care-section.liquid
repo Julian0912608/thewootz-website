@@ -1,0 +1,26 @@
+<div class="care-section fade-up">
+  <div>
+    <h3 class="care-section__title">{{ section.settings.title | default: 'Houd je plank in topconditie' }}</h3>
+    <p class="care-section__text">{{ section.settings.text | default: 'We hebben een uitgebreid onderhoudsdocument gemaakt. Download het gratis en zorg dat jouw plank tientallen jaren meegaat.' }}</p>
+  </div>
+  {% if section.settings.link != blank %}
+    <a href="{{ section.settings.link }}" class="btn btn--white"
+       {% if section.settings.new_tab %}target="_blank" rel="noopener"{% endif %}>
+      {{ section.settings.link_text | default: 'Download onderhoudsgids →' }}
+    </a>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Onderhoudssectie",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titel", "default": "Houd je plank in topconditie" },
+    { "type": "textarea", "id": "text", "label": "Tekst" },
+    { "type": "text", "id": "link_text", "label": "Knoptekst", "default": "Download onderhoudsgids →" },
+    { "type": "url", "id": "link", "label": "Link naar PDF" },
+    { "type": "checkbox", "id": "new_tab", "label": "Openen in nieuw tabblad", "default": true }
+  ],
+  "presets": [{ "name": "Onderhoudssectie" }]
+}
+{% endschema %}

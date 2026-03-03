@@ -1,0 +1,32 @@
+{
+  "general": {
+    "password_page": {
+      "login_form_heading": "Winkel openen met wachtwoord",
+      "login_form_password_label": "Wachtwoord",
+      "login_form_password_placeholder": "Je wachtwoord",
+      "login_form_submit": "Inloggen",
+      "admin_link_html": "Bent u de winkeleigenaar? <a href=\"/admin\" target=\"_blank\">Inloggen hier</a>"
+    }
+  },
+  "actions": {
+    "add_to_cart": "In winkelwagen",
+    "choose_options": "Opties kiezen",
+    "sold_out": "Uitverkocht",
+    "checkout": "Afrekenen",
+    "view_all": "Bekijk alles"
+  },
+  "cart": {
+    "title": "Winkelwagen",
+    "empty": "Je winkelwagen is leeg.",
+    "subtotal": "Subtotaal",
+    "checkout": "Afrekenen →",
+    "shipping_note": "Gratis verzending vanaf"
+  },
+  "products": {
+    "product": {
+      "from": "Vanaf",
+      "sold_out": "Uitverkocht",
+      "unavailable": "Niet beschikbaar"
+    }
+  }
+}

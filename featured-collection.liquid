@@ -1,0 +1,120 @@
+{% assign collection = collections[section.settings.collection] %}
+
+<section class="product-grid-section" id="products">
+  <div class="product-grid-section__head fade-up">
+    <div class="section-label section-label--center">{{ section.settings.label | default: 'De Collectie' }}</div>
+    <h2>{{ section.settings.title | default: 'Planken die blijven' }}</h2>
+    {% if section.settings.subtitle != blank %}
+      <p class="sec-sub" style="color:var(--mocha);margin-top:12px;font-size:.9rem;line-height:1.8">{{ section.settings.subtitle }}</p>
+    {% endif %}
+  </div>
+
+  <div class="product-grid">
+    {% assign featured_id = section.settings.featured_product %}
+    {% assign products_shown = 0 %}
+    {% assign max_products = section.settings.products_count | default: 6 %}
+
+    {% for product in collection.products limit: max_products %}
+      {% assign is_featured = false %}
+      {% if product.id == featured_id or products_shown == 0 %}
+        {% assign is_featured = true %}
+      {% endif %}
+
+      <article class="product-card{% if is_featured and products_shown == 0 %} product-card--featured{% endif %} fade-up{% if products_shown > 0 %} delay-{{ products_shown }}{% endif %}"
+               aria-label="{{ product.title }}">
+
+        <div class="product-card__media">
+          {% if product.available == false %}
+            <span class="product-card__badge badge--sold-out">Uitverkocht</span>
+          {% elsif product.tags contains 'bestseller' %}
+            <span class="product-card__badge badge--bestseller">Bestseller</span>
+          {% elsif product.tags contains 'nieuw' or product.tags contains 'new' %}
+            <span class="product-card__badge badge--new">Nieuw</span>
+          {% elsif product.compare_at_price > product.price %}
+            <span class="product-card__badge badge--sale">Sale</span>
+          {% endif %}
+
+          <a href="{{ product.url }}">
+            {% if product.featured_image %}
+              {{ product.featured_image | image_url: width: 900 | image_tag:
+                  alt: product.featured_image.alt | escape,
+                  loading: 'lazy',
+                  sizes: '(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw',
+                  widths: '400,600,900'
+              }}
+            {% endif %}
+            {% if product.images[1] %}
+              <div class="hover-image">
+                {{ product.images[1] | image_url: width: 900 | image_tag:
+                    alt: product.images[1].alt | escape,
+                    loading: 'lazy'
+                }}
+              </div>
+            {% endif %}
+          </a>
+        </div>
+
+        <div class="product-card__info">
+          {% if product.product_type != blank %}
+            <div class="product-card__category">{{ product.product_type }}</div>
+          {% endif %}
+          <h3 class="product-card__title">
+            <a href="{{ product.url }}" style="text-decoration:none;color:inherit">{{ product.title }}</a>
+          </h3>
+          {% if product.description != blank %}
+            <p class="product-card__description">{{ product.description | strip_html | truncate: 100 }}</p>
+          {% endif %}
+          <div class="product-card__footer">
+            <div class="product-card__price">
+              {% if product.price_varies %}<span class="price-from">Vanaf </span>{% endif %}
+              {{ product.price | money }}
+              {% if product.compare_at_price > product.price %}
+                <s>{{ product.compare_at_price | money }}</s>
+              {% endif %}
+            </div>
+            {% if product.available %}
+              {% if product.variants.size == 1 %}
+                <button class="btn btn--terra btn--sm"
+                        data-add-to-cart
+                        data-variant-id="{{ product.first_available_variant.id }}">
+                  In winkelwagen
+                </button>
+              {% else %}
+                <a href="{{ product.url }}" class="btn btn--outline btn--sm">Opties kiezen</a>
+              {% endif %}
+            {% else %}
+              <button class="btn btn--sm" disabled>Uitverkocht</button>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      {% assign products_shown = products_shown | plus: 1 %}
+    {% else %}
+      <p style="color:var(--mist);grid-column:span 3;text-align:center;padding:40px">
+        Geen producten gevonden. Koppel een collectie in de theme-instellingen.
+      </p>
+    {% endfor %}
+  </div>
+
+  {% if section.settings.show_all_link %}
+    <div style="text-align:center;margin-top:40px">
+      <a href="{{ collection.url }}" class="btn btn--outline">Bekijk alle producten</a>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Productgrid",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collectie" },
+    { "type": "product", "id": "featured_product", "label": "Uitgelicht product (breed)" },
+    { "type": "range", "id": "products_count", "min": 3, "max": 12, "step": 1, "label": "Aantal producten", "default": 5 },
+    { "type": "text", "id": "label", "label": "Label", "default": "De Collectie" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Planken die blijven" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitel" },
+    { "type": "checkbox", "id": "show_all_link", "label": "Toon 'Bekijk alle' knop", "default": true }
+  ],
+  "presets": [{ "name": "Productgrid" }]
+}
+{% endschema %}

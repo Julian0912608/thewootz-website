@@ -1,0 +1,65 @@
+<article style="max-width:780px;margin:0 auto;padding:72px 48px" itemscope itemtype="https://schema.org/BlogPosting">
+  <div style="margin-bottom:40px">
+    <a href="{{ blog.url }}" style="font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);text-decoration:none">
+      ← {{ blog.title }}
+    </a>
+  </div>
+
+  {% if article.tags.size > 0 %}
+    <div class="section-label">{{ article.tags | first }}</div>
+  {% endif %}
+
+  <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:300;line-height:1.05;margin-bottom:20px" itemprop="headline">
+    {{ article.title }}
+  </h1>
+
+  <div style="display:flex;gap:16px;align-items:center;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--stone);font-size:.78rem;color:var(--mist)">
+    <span>📅 <time itemprop="datePublished" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%d %B %Y' }}</time></span>
+    <span itemprop="author">{{ article.author }}</span>
+  </div>
+
+  {% if article.image %}
+    <div style="margin-bottom:40px;border-radius:var(--radius);overflow:hidden">
+      {{ article.image | image_url: width: 1200 | image_tag:
+          loading: 'eager', alt: article.image.alt | escape,
+          style: 'width:100%;display:block',
+          itemprop: 'image'
+      }}
+    </div>
+  {% endif %}
+
+  <div class="rte article-body" itemprop="articleBody">
+    {{ article.content }}
+  </div>
+
+  {% if article.tags.size > 0 %}
+    <div style="margin-top:40px;padding-top:24px;border-top:1px solid var(--stone);font-size:.78rem;color:var(--mist)">
+      Tags:
+      {% for tag in article.tags %}
+        <a href="{{ blog.url }}/tagged/{{ tag | handle }}" style="color:var(--sage);text-decoration:none;margin-left:4px">{{ tag }}</a>{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div style="margin-top:48px;text-align:center">
+    <a href="{{ blog.url }}" class="btn btn--outline">← Terug naar blog</a>
+  </div>
+</article>
+
+<style>
+.article-body { color:var(--mocha);line-height:1.9;font-size:.93rem;font-weight:300; }
+.article-body h2 { font-family:var(--font-display);font-size:1.8rem;font-weight:300;margin:40px 0 14px;color:var(--espresso); }
+.article-body h3 { font-family:var(--font-display);font-size:1.3rem;font-weight:600;margin:28px 0 10px;color:var(--espresso); }
+.article-body p { margin-bottom:18px; }
+.article-body ul,.article-body ol { margin:0 0 18px 24px; }
+.article-body li { margin-bottom:8px; }
+.article-body a { color:var(--terra);text-decoration:underline; }
+.article-body strong { font-weight:600;color:var(--espresso); }
+.article-body img { border-radius:var(--radius);margin:24px 0;max-width:100%; }
+.article-body blockquote { border-left:3px solid var(--sage);padding:12px 24px;margin:24px 0;font-family:var(--font-display);font-size:1.2rem;font-style:italic;color:var(--mocha); }
+@media(max-width:640px){ article { padding:48px 16px; } }
+</style>
+
+{% schema %}
+{ "name": "Artikelpagina" }
+{% endschema %}

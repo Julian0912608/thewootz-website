@@ -1,0 +1,37 @@
+<section style="padding:72px 48px;max-width:var(--content-width);margin:0 auto">
+  <div class="section-label section-label--center" style="justify-content:center">Blog</div>
+  <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:300;text-align:center;margin-bottom:52px">
+    {{ blog.title }}
+  </h1>
+
+  <div class="blog-grid">
+    {% for article in blog.articles %}
+      <a class="blog-card fade-up" href="{{ article.url }}">
+        {% if article.image %}
+          <div class="blog-card__image">
+            {{ article.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: article.image.alt | escape }}
+          </div>
+        {% endif %}
+        <div class="blog-card__body">
+          {% if article.tags.size > 0 %}
+            <div class="blog-card__tag">{{ article.tags | first }}</div>
+          {% endif %}
+          <h2 class="blog-card__title">{{ article.title }}</h2>
+          {% if article.excerpt %}
+            <p class="blog-card__excerpt">{{ article.excerpt | strip_html | truncate: 120 }}</p>
+          {% endif %}
+          <div class="blog-card__meta">
+            <span>📅 {{ article.published_at | date: '%d %b %Y' }}</span>
+            <span>{{ article.author }}</span>
+          </div>
+        </div>
+      </a>
+    {% else %}
+      <p style="grid-column:span 3;text-align:center;color:var(--mist);padding:60px">Nog geen blogposts gepubliceerd.</p>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Blogpagina" }
+{% endschema %}

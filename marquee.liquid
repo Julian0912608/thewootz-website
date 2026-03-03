@@ -1,0 +1,27 @@
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {% assign items = section.settings.text | split: '|' %}
+    {% for item in items %}{% assign item = item | strip %}{% if item != blank %}
+      <span class="marquee__item">{{ item }}</span>
+    {% endif %}{% endfor %}
+    {% comment %}Duplicate for seamless loop{% endcomment %}
+    {% for item in items %}{% assign item = item | strip %}{% if item != blank %}
+      <span class="marquee__item">{{ item }}</span>
+    {% endif %}{% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Lopende tekst",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Items (scheid met |)",
+      "default": "Handgemaakt in Nederland | Gratis verzending boven €80 | 100% duurzaam hout | Hét kookcadeau | NL & België | Onderhoudsgids inbegrepen"
+    }
+  ],
+  "presets": [{ "name": "Lopende tekst" }]
+}
+{% endschema %}

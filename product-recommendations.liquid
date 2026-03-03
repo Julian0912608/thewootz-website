@@ -1,0 +1,24 @@
+<div id="productRecs" style="padding:64px 48px;background:var(--parchment)">
+  <div style="max-width:var(--content-width);margin:0 auto">
+    <div class="section-label">Misschien ook interessant</div>
+    <h2 style="font-family:var(--font-display);font-size:1.8rem;font-weight:300;margin-bottom:32px">Anderen kochten ook</h2>
+    <div class="collection-grid" id="recsGrid"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const productId = {{ product.id }};
+  const url = `{{ routes.product_recommendations_url }}?product_id=${productId}&limit=3&section_id=product-page`;
+  fetch(url).then(r => r.text()).then(html => {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    const grid = document.getElementById('recsGrid');
+    if (!grid) return;
+    tmp.querySelectorAll('.product-card').forEach(c => grid.appendChild(c));
+    if (grid.children.length === 0) document.getElementById('productRecs').style.display = 'none';
+  }).catch(() => {
+    document.getElementById('productRecs').style.display = 'none';
+  });
+})();
+</script>

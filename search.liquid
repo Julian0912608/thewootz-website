@@ -1,0 +1,49 @@
+<div style="max-width:900px;margin:0 auto;padding:72px 48px;min-height:60vh">
+  <div class="section-label">Zoeken</div>
+  <h1 style="font-family:var(--font-display);font-size:clamp(2rem,3vw,3rem);font-weight:300;margin-bottom:32px">
+    {% if search.performed %}Resultaten voor "{{ search.terms }}"{% else %}Zoeken{% endif %}
+  </h1>
+
+  <form action="{{ routes.search_url }}" method="get" style="display:flex;gap:10px;margin-bottom:48px">
+    <input type="search" name="q" value="{{ search.terms | escape }}"
+           placeholder="Zoek producten..."
+           style="flex:1;padding:13px 18px;border:1.5px solid var(--stone);border-radius:var(--radius);font-family:var(--font-body);font-size:.9rem;background:var(--cream);color:var(--espresso);outline:none">
+    <input type="hidden" name="type" value="product">
+    <button type="submit" class="btn btn--primary">Zoeken</button>
+  </form>
+
+  {% if search.performed %}
+    {% if search.results_count == 0 %}
+      <p style="color:var(--mist)">Geen resultaten gevonden voor "{{ search.terms }}".</p>
+      <div style="margin-top:24px">
+        <a href="{{ routes.collections_url }}/all" class="btn btn--outline">Bekijk alle producten</a>
+      </div>
+    {% else %}
+      <p style="font-size:.82rem;color:var(--mist);margin-bottom:28px">{{ search.results_count }} resultaten gevonden</p>
+      <div class="collection-grid">
+        {% for item in search.results %}
+          {% if item.object_type == 'product' %}
+            <article class="product-card fade-up">
+              <div class="product-card__media" style="aspect-ratio:4/3">
+                <a href="{{ item.url }}">
+                  {% if item.featured_image %}
+                    {{ item.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: item.featured_image.alt }}
+                  {% endif %}
+                </a>
+              </div>
+              <div class="product-card__info">
+                <h3 class="product-card__title">
+                  <a href="{{ item.url }}" style="text-decoration:none;color:inherit">{{ item.title }}</a>
+                </h3>
+                <div class="product-card__footer">
+                  <div class="product-card__price">{{ item.price | money }}</div>
+                  <a href="{{ item.url }}" class="btn btn--terra btn--sm">Bekijk</a>
+                </div>
+              </div>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+</div>

@@ -1,0 +1,162 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Handgemaakt · NL & BE",
+        "title": "Koken begint\nbij het juiste\n<em>werkblad.</em>",
+        "subtitle": "TheWootz maakt houten snijplanken, hakblokken en borrelplanken voor de kok die kwaliteit en schoonheid waardeert. Elk stuk uniek. Elk stuk blijvend.",
+        "cta_primary_text": "Bekijk collectie",
+        "cta_primary_url": "/collections/all",
+        "cta_secondary_text": "Ons verhaal",
+        "cta_secondary_url": "/pages/ons-verhaal",
+        "stat1_number": "100%",
+        "stat1_label": "Handgemaakt",
+        "stat2_number": "4.9★",
+        "stat2_label": "Reviews",
+        "stat3_number": "€80",
+        "stat3_label": "Gratis verzend."
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "Handgemaakt in Nederland | Gratis verzending boven €80 | 100% duurzaam hout | Hét kookcadeau | NL & België | Onderhoudsgids inbegrepen"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "label": "De Collectie",
+        "title": "Planken die blijven",
+        "subtitle": "Van borrelplank tot luxe hakblok — gemaakt om dagelijks te gebruiken én om trots op te zijn.",
+        "products_count": 5,
+        "show_all_link": true
+      }
+    },
+    "featured-product": {
+      "type": "featured-product",
+      "settings": {
+        "label": "Uitgelicht",
+        "title": "Het luxe hakblok voor serieuze koks",
+        "spec1_icon": "🌳",
+        "spec1_title": "Massief hardwood",
+        "spec1_sub": "Duurzaam & langdurig",
+        "spec2_icon": "✋",
+        "spec2_title": "Handgemaakt",
+        "spec2_sub": "Uniek stuk",
+        "spec3_icon": "🛡",
+        "spec3_title": "Mes-vriendelijk",
+        "spec3_sub": "Beschermt je messen",
+        "spec4_icon": "📋",
+        "spec4_title": "Onderhoudsgids",
+        "spec4_sub": "Gratis bij bestelling"
+      }
+    },
+    "brand-story": {
+      "type": "brand-story",
+      "settings": {
+        "label": "Ons Verhaal",
+        "title": "Waar passie voor koken begint",
+        "text_1": "TheWootz is opgericht door echte kookliefhebbers die geloofden dat keukengereedschap net zo mooi moet zijn als het eten dat erop bereid wordt. Elk stuk is ambachtelijk gemaakt en ontworpen om tientallen jaren mee te gaan.",
+        "text_2": "We selecteren alleen het beste hout, behandelen elk stuk met de hand en zorgen voor een afwerking die de natuur van het materiaal recht doet.",
+        "feat1_title": "Duurzaam hout",
+        "feat1_sub": "Bewust geselecteerd",
+        "feat2_title": "100% handgemaakt",
+        "feat2_sub": "Elk stuk uniek",
+        "feat3_title": "Gratis verzending",
+        "feat3_sub": "NL & BE boven €80",
+        "feat4_title": "Cadeau-klaar",
+        "feat4_sub": "Mooie verpakking",
+        "cta_text": "Lees ons verhaal",
+        "cta_url": "/pages/ons-verhaal"
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "label": "Klantreviews",
+        "title": "Wat koks over ons zeggen"
+      },
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Prachtige snijplank, de kwaliteit is echt top. Staat geweldig op het aanrecht en is na maanden dagelijks gebruik nog steeds perfect.",
+            "name": "Marc van der Berg",
+            "role": "Hobbykok · Amsterdam"
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Het hakblok is een topproduct. Stevig, mooi afgewerkt en voelt meteen als professioneel. De onderhoudsolie erbij besteld — ideale combinatie.",
+            "name": "Sophie Janssen",
+            "role": "Thuiskok · Rotterdam"
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Cadeau gegeven voor een verjaardag — snel geleverd, mooi verpakt, ontvanger super blij. Absolute aanrader!",
+            "name": "Thomas Koster",
+            "role": "Food Blogger · Utrecht"
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3"]
+    },
+    "care-section": {
+      "type": "care-section",
+      "settings": {
+        "title": "Houd je plank in topconditie",
+        "text": "We hebben een uitgebreid onderhoudsdocument gemaakt. Download het gratis en zorg dat jouw plank tientallen jaren meegaat.",
+        "link_text": "Download onderhoudsgids →",
+        "new_tab": true
+      }
+    },
+    "email-funnel": {
+      "type": "email-funnel",
+      "settings": {
+        "title": "10% korting op jouw eerste bestelling",
+        "subtitle": "Schrijf je in voor onze nieuwsbrief en ontvang kooktips, nieuwe producten als eerste en een welkomstkorting. Voor echte kookliefhebbers.",
+        "button_text": "Ja, ik wil 10% korting →",
+        "disclaimer": "Geen spam. Altijd uitschrijfbaar."
+      }
+    },
+    "blog-posts": {
+      "type": "blog-posts",
+      "settings": {
+        "label": "Inspiratie & Tips",
+        "title": "Leer meer over hout & koken",
+        "show_all_link": true
+      }
+    },
+    "trust-bar": {
+      "type": "trust-bar",
+      "blocks": {
+        "trust-1": { "type": "item", "settings": { "icon": "🚚", "title": "Gratis verzending", "subtitle": "NL & BE boven €80" }},
+        "trust-2": { "type": "item", "settings": { "icon": "✋", "title": "Handgemaakt", "subtitle": "Elk stuk uniek" }},
+        "trust-3": { "type": "item", "settings": { "icon": "📋", "title": "Onderhoudsgids", "subtitle": "Gratis bij bestelling" }},
+        "trust-4": { "type": "item", "settings": { "icon": "💳", "title": "Veilig betalen", "subtitle": "iDEAL, Bancontact, Visa" }},
+        "trust-5": { "type": "item", "settings": { "icon": "🎁", "title": "Cadeau-klaar", "subtitle": "Mooie verpakking" }}
+      },
+      "block_order": ["trust-1","trust-2","trust-3","trust-4","trust-5"]
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "featured-collection",
+    "featured-product",
+    "brand-story",
+    "reviews",
+    "care-section",
+    "email-funnel",
+    "blog-posts",
+    "trust-bar"
+  ]
+}

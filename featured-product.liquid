@@ -1,0 +1,89 @@
+{% assign product = all_products[section.settings.product] %}
+
+{% if product %}
+<section class="featured-product" aria-label="Uitgelicht product: {{ product.title }}">
+
+  <div class="featured-product__images">
+    {% if product.images[0] %}
+      <div class="featured-product__image">
+        {{ product.images[0] | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.images[0].alt }}
+      </div>
+    {% endif %}
+    {% if product.images[1] %}
+      <div class="featured-product__image">
+        {{ product.images[1] | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.images[1].alt }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="featured-product__content fade-up">
+    <div class="section-label">{{ section.settings.label | default: 'Uitgelicht' }}</div>
+    <h2>{{ section.settings.title | default: product.title }}</h2>
+    <p style="color:var(--mocha);font-size:.9rem;line-height:1.8;margin-top:14px;font-weight:300">
+      {{ section.settings.description | default: product.description | strip_html | truncate: 200 }}
+    </p>
+
+    {% if section.settings.spec1_title != blank %}
+      <div class="featured-product__specs">
+        <div class="spec-item">
+          <span class="spec-item__icon">{{ section.settings.spec1_icon | default: '🌳' }}</span>
+          <div><span class="spec-item__title">{{ section.settings.spec1_title }}</span><span class="spec-item__subtitle">{{ section.settings.spec1_sub }}</span></div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-item__icon">{{ section.settings.spec2_icon | default: '✋' }}</span>
+          <div><span class="spec-item__title">{{ section.settings.spec2_title }}</span><span class="spec-item__subtitle">{{ section.settings.spec2_sub }}</span></div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-item__icon">{{ section.settings.spec3_icon | default: '🛡' }}</span>
+          <div><span class="spec-item__title">{{ section.settings.spec3_title }}</span><span class="spec-item__subtitle">{{ section.settings.spec3_sub }}</span></div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-item__icon">{{ section.settings.spec4_icon | default: '📋' }}</span>
+          <div><span class="spec-item__title">{{ section.settings.spec4_title }}</span><span class="spec-item__subtitle">{{ section.settings.spec4_sub }}</span></div>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="featured-product__price">
+      <sub>€</sub>{{ product.price | money_without_currency }}
+    </div>
+
+    {% if product.available %}
+      <button class="btn btn--primary"
+              data-add-to-cart
+              data-variant-id="{{ product.first_available_variant.id }}">
+        In winkelwagen
+      </button>
+    {% else %}
+      <a href="{{ product.url }}" class="btn btn--outline">Bekijk product</a>
+    {% endif %}
+  </div>
+
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Uitgelicht product",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Uitgelicht" },
+    { "type": "textarea", "id": "title", "label": "Titel (overschrijft producttitel)" },
+    { "type": "textarea", "id": "description", "label": "Beschrijving (overschrijft productbeschrijving)" },
+    { "type": "header", "content": "Specificaties (optioneel)" },
+    { "type": "text", "id": "spec1_icon", "label": "Spec 1 emoji", "default": "🌳" },
+    { "type": "text", "id": "spec1_title", "label": "Spec 1 titel", "default": "Massief hardwood" },
+    { "type": "text", "id": "spec1_sub", "label": "Spec 1 subtitel", "default": "Duurzaam & langdurig" },
+    { "type": "text", "id": "spec2_icon", "label": "Spec 2 emoji", "default": "✋" },
+    { "type": "text", "id": "spec2_title", "label": "Spec 2 titel", "default": "Handgemaakt" },
+    { "type": "text", "id": "spec2_sub", "label": "Spec 2 subtitel", "default": "Uniek stuk" },
+    { "type": "text", "id": "spec3_icon", "label": "Spec 3 emoji", "default": "🛡" },
+    { "type": "text", "id": "spec3_title", "label": "Spec 3 titel", "default": "Mes-vriendelijk" },
+    { "type": "text", "id": "spec3_sub", "label": "Spec 3 subtitel", "default": "Beschermt je messen" },
+    { "type": "text", "id": "spec4_icon", "label": "Spec 4 emoji", "default": "📋" },
+    { "type": "text", "id": "spec4_title", "label": "Spec 4 titel", "default": "Onderhoudsgids" },
+    { "type": "text", "id": "spec4_sub", "label": "Spec 4 subtitel", "default": "Gratis bij bestelling" }
+  ],
+  "presets": [{ "name": "Uitgelicht product" }]
+}
+{% endschema %}

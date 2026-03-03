@@ -1,0 +1,97 @@
+<section class="hero" aria-label="Hero sectie">
+
+  <!-- RIGHT: foto mosaic -->
+  <div class="hero__media" aria-hidden="true">
+    {% for i in (1..4) %}
+      {% assign img_key = 'image_' | append: i %}
+      {% if section.settings[img_key] != blank %}
+        <div class="hero__media-cell">
+          {{ section.settings[img_key] | image_url: width: 700 | image_tag:
+              loading: 'eager',
+              sizes: '(max-width:640px) 50vw, 25vw',
+              widths: '400,600,700'
+          }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- LEFT: content -->
+  <div class="hero__content">
+    {% if section.settings.eyebrow != blank %}
+      <div class="hero__eyebrow">{{ section.settings.eyebrow }}</div>
+    {% endif %}
+
+    <h1 class="hero__title fade-up">
+      {{ section.settings.title | newline_to_br }}
+    </h1>
+
+    {% if section.settings.subtitle != blank %}
+      <p class="hero__subtitle fade-up delay-1">{{ section.settings.subtitle }}</p>
+    {% endif %}
+
+    <div class="hero__actions fade-up delay-2">
+      {% if section.settings.cta_primary_url != blank %}
+        <a href="{{ section.settings.cta_primary_url }}" class="btn btn--primary">
+          {{ section.settings.cta_primary_text | default: 'Bekijk collectie' }}
+        </a>
+      {% endif %}
+      {% if section.settings.cta_secondary_url != blank %}
+        <a href="{{ section.settings.cta_secondary_url }}" class="btn btn--outline">
+          {{ section.settings.cta_secondary_text | default: 'Ons verhaal' }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="hero__stats fade-up delay-3">
+      {% if section.settings.stat1_number != blank %}
+        <div class="hero__stat">
+          <div class="hero__stat-number">{{ section.settings.stat1_number }}</div>
+          <div class="hero__stat-label">{{ section.settings.stat1_label }}</div>
+        </div>
+      {% endif %}
+      {% if section.settings.stat2_number != blank %}
+        <div class="hero__stat">
+          <div class="hero__stat-number">{{ section.settings.stat2_number }}</div>
+          <div class="hero__stat-label">{{ section.settings.stat2_label }}</div>
+        </div>
+      {% endif %}
+      {% if section.settings.stat3_number != blank %}
+        <div class="hero__stat">
+          <div class="hero__stat-number">{{ section.settings.stat3_number }}</div>
+          <div class="hero__stat-label">{{ section.settings.stat3_label }}</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Kleine tekst boven titel", "default": "Handgemaakt · NL & BE" },
+    { "type": "textarea", "id": "title", "label": "Titel (gebruik enters voor regeleinden)", "default": "Koken begint\nbij het juiste\nwerkblad." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitel", "default": "TheWootz maakt houten snijplanken, hakblokken en borrelplanken voor de kok die kwaliteit en schoonheid waardeert." },
+    { "type": "header", "content": "Knoppen" },
+    { "type": "text", "id": "cta_primary_text", "label": "Primaire knoptekst", "default": "Bekijk collectie" },
+    { "type": "url", "id": "cta_primary_url", "label": "Primaire knoplink" },
+    { "type": "text", "id": "cta_secondary_text", "label": "Secundaire knoptekst", "default": "Ons verhaal" },
+    { "type": "url", "id": "cta_secondary_url", "label": "Secundaire knoplink" },
+    { "type": "header", "content": "Statistieken" },
+    { "type": "text", "id": "stat1_number", "label": "Stat 1 — getal", "default": "100%" },
+    { "type": "text", "id": "stat1_label", "label": "Stat 1 — label", "default": "Handgemaakt" },
+    { "type": "text", "id": "stat2_number", "label": "Stat 2 — getal", "default": "4.9★" },
+    { "type": "text", "id": "stat2_label", "label": "Stat 2 — label", "default": "Reviews" },
+    { "type": "text", "id": "stat3_number", "label": "Stat 3 — getal", "default": "€80" },
+    { "type": "text", "id": "stat3_label", "label": "Stat 3 — label", "default": "Gratis verzend." },
+    { "type": "header", "content": "Foto's (mosaic — 4 foto's)" },
+    { "type": "image_picker", "id": "image_1", "label": "Foto 1" },
+    { "type": "image_picker", "id": "image_2", "label": "Foto 2" },
+    { "type": "image_picker", "id": "image_3", "label": "Foto 3" },
+    { "type": "image_picker", "id": "image_4", "label": "Foto 4" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

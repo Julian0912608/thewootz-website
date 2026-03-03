@@ -1,0 +1,80 @@
+<section class="collection-page">
+  <div class="collection-page__header fade-up">
+    <div class="section-label section-label--center">Collectie</div>
+    <h1>{{ collection.title }}</h1>
+    {% if collection.description != blank %}
+      <p style="color:var(--mocha);margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto;font-size:.9rem">{{ collection.description }}</p>
+    {% endif %}
+  </div>
+
+  <div class="collection-grid">
+    {% for product in collection.products %}
+      <article class="product-card fade-up delay-{{ forloop.index | modulo: 3 }}" aria-label="{{ product.title }}">
+        <div class="product-card__media">
+          {% if product.available == false %}
+            <span class="product-card__badge badge--sold-out">Uitverkocht</span>
+          {% elsif product.tags contains 'bestseller' %}
+            <span class="product-card__badge badge--bestseller">Bestseller</span>
+          {% elsif product.tags contains 'nieuw' %}
+            <span class="product-card__badge badge--new">Nieuw</span>
+          {% endif %}
+          <a href="{{ product.url }}">
+            {% if product.featured_image %}
+              {{ product.featured_image | image_url: width: 700 | image_tag:
+                  loading: 'lazy', alt: product.featured_image.alt | escape,
+                  sizes: '(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw'
+              }}
+            {% endif %}
+            {% if product.images[1] %}
+              <div class="hover-image">
+                {{ product.images[1] | image_url: width: 700 | image_tag: loading: 'lazy' }}
+              </div>
+            {% endif %}
+          </a>
+        </div>
+        <div class="product-card__info">
+          {% if product.product_type != blank %}
+            <div class="product-card__category">{{ product.product_type }}</div>
+          {% endif %}
+          <h2 class="product-card__title">
+            <a href="{{ product.url }}" style="text-decoration:none;color:inherit">{{ product.title }}</a>
+          </h2>
+          <div class="product-card__footer">
+            <div class="product-card__price">{{ product.price | money }}</div>
+            {% if product.available %}
+              {% if product.variants.size == 1 %}
+                <button class="btn btn--terra btn--sm" data-add-to-cart data-variant-id="{{ product.first_available_variant.id }}">
+                  In winkelwagen
+                </button>
+              {% else %}
+                <a href="{{ product.url }}" class="btn btn--outline btn--sm">Opties kiezen</a>
+              {% endif %}
+            {% else %}
+              <button class="btn btn--sm" disabled>Uitverkocht</button>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+    {% else %}
+      <p style="grid-column:span 3;text-align:center;color:var(--mist);padding:60px">Geen producten gevonden in deze collectie.</p>
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    <div style="text-align:center;margin-top:48px;display:flex;gap:8px;justify-content:center">
+      {% if paginate.previous %}
+        <a href="{{ paginate.previous.url }}" class="btn btn--outline btn--sm">← Vorige</a>
+      {% endif %}
+      {% for part in paginate.parts %}
+        {% if part.is_link %}
+          <a href="{{ part.url }}" class="btn btn--outline btn--sm">{{ part.title }}</a>
+        {% else %}
+          <span class="btn btn--primary btn--sm">{{ part.title }}</span>
+        {% endif %}
+      {% endfor %}
+      {% if paginate.next %}
+        <a href="{{ paginate.next.url }}" class="btn btn--outline btn--sm">Volgende →</a>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>

@@ -1,0 +1,59 @@
+<section class="reviews-section" aria-label="Klantreviews">
+  <div class="reviews-section__head fade-up">
+    <div class="section-label section-label--center">{{ section.settings.label | default: 'Klantreviews' }}</div>
+    <h2>{{ section.settings.title | default: 'Wat koks over ons zeggen' }}</h2>
+  </div>
+
+  <div class="reviews-grid">
+    {% for block in section.blocks %}
+      {% if block.type == 'review' %}
+        <div class="review-card fade-up delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="review-card__quote" aria-hidden="true">"</div>
+          <div class="review-card__stars" aria-label="{{ block.settings.rating }} sterren">
+            {% for i in (1..block.settings.rating) %}★{% endfor %}
+          </div>
+          <p class="review-card__text">{{ block.settings.text }}</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar" aria-hidden="true">
+              {{ block.settings.name | slice: 0 }}{{ block.settings.name | split: ' ' | last | slice: 0 }}
+            </div>
+            <div>
+              <div class="review-card__name">{{ block.settings.name }}</div>
+              <div class="review-card__role">{{ block.settings.role }}</div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Klantreviews" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Wat koks over ons zeggen" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Beoordeling", "default": 5 },
+        { "type": "textarea", "id": "text", "label": "Recensietekst" },
+        { "type": "text", "id": "name", "label": "Naam reviewer" },
+        { "type": "text", "id": "role", "label": "Rol/locatie", "default": "Hobbykok · Amsterdam" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Reviews",
+    "blocks": [
+      { "type": "review", "settings": { "rating": 5, "text": "Prachtige snijplank, de kwaliteit is echt top. Staat geweldig op het aanrecht en is na maanden dagelijks gebruik nog steeds perfect.", "name": "Marc van der Berg", "role": "Hobbykok · Amsterdam" }},
+      { "type": "review", "settings": { "rating": 5, "text": "Het hakblok is een topproduct. Stevig, mooi afgewerkt en voelt meteen als professioneel. De onderhoudsolie erbij besteld — ideale combinatie.", "name": "Sophie Janssen", "role": "Thuiskok · Rotterdam" }},
+      { "type": "review", "settings": { "rating": 5, "text": "Cadeau gegeven voor een verjaardag — snel geleverd, mooi verpakt, ontvanger super blij. Absolute aanrader!", "name": "Thomas Koster", "role": "Food Blogger · Utrecht" }}
+    ]
+  }]
+}
+{% endschema %}
